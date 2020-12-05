@@ -1,11 +1,100 @@
-﻿#Function ImgConvert
+﻿###################################################################################################################################################
+# ImgConvert - Converts RAW (and other) image files to the widely-supported JPEG or PNG formats
+# 
+# Most of the awesome work by David Anson from MSFT(https://dlaa.me/blog/post/converttojpeg).
+# https://github.com/DavidAnson/ConvertTo-Jpeg
+#
+# PNG support and scaling by Diagg from www.OSD-couture.com
+#
+# GUI Added by WRCsubeRS
+###################################################################################################################################################
+
+Add-Type -AssemblyName System.Windows.Forms
+[System.Windows.Forms.Application]::EnableVisualStyles()
+
+$SourceDirectory = $env:HOMEPATH
+$DestinationDirectory = $env:HOMEPATH
+
+# Build and Present GUI to User
+###################################################################################################################################################
+
+# Build Form Dialog Box
+$ImgConvertMainWindow                                = New-Object system.Windows.Forms.Form
+$ImgConvertMainWindow.FormBorderStyle                = [System.Windows.Forms.FormBorderStyle]::Fixed3D
+$ImgConvertMainWindow.ControlBox                     = $false
+$ImgConvertMainWindow.ClientSize                     = '600,400'
+$ImgConvertMainWindow.text                           = "ImgConvert"
+$ImgConvertMainWindow.TopMost                        = $true
+
+$ImgConvert_Source_GroupBox                          = New-Object system.Windows.Forms.Groupbox
+$ImgConvert_Source_GroupBox.Width                    = 580
+$ImgConvert_Source_GroupBox.Height                   = 40
+$ImgConvert_Source_GroupBox.Text                     = "Source Directory"
+$ImgConvert_Source_GroupBox.Location                 = New-Object System.Drawing.Point(10,10)
+
+$ImgConvert_SourceDirectory_Label                    = New-Object system.Windows.Forms.Label
+$ImgConvert_SourceDirectory_Label.Size               = '520,25'
+$ImgConvert_SourceDirectory_Label.Text               = $SourceDirectory
+$ImgConvert_SourceDirectory_Label.AutoSize           = $true
+$ImgConvert_SourceDirectory_Label.TextAlign          = 'MiddleLeft'
+$ImgConvert_SourceDirectory_Label.Location           = New-Object System.Drawing.Point(5,15)
+$ImgConvert_SourceDirectory_Label.Font               = 'Microsoft Sans Serif,9.5,style=Underline'
+
+$ImgConvert_SourceSelect_Button                      = New-Object system.Windows.Forms.Button
+$ImgConvert_SourceSelect_Button.Text                 = "..."
+$ImgConvert_SourceSelect_Button.Width                = 35
+$ImgConvert_SourceSelect_Button.Height               = 25
+$ImgConvert_SourceSelect_Button.Location             = New-Object System.Drawing.Point(540,10)
+$ImgConvert_SourceSelect_Button.Font                 = 'Microsoft Sans Serif,9.5'
+$ImgConvert_SourceSelect_Button.Add_Click({
+
+})
+
+$ImgConvert_Source_GroupBox.Controls.AddRange(@(
+    $ImgConvert_SourceDirectory_Label,
+    $ImgConvert_SourceSelect_Button
+))
+
+$ImgConvert_Destination_GroupBox                     = New-Object system.Windows.Forms.Groupbox
+$ImgConvert_Destination_GroupBox.Width               = 580
+$ImgConvert_Destination_GroupBox.Height              = 40
+$ImgConvert_Destination_GroupBox.Text                = "Destination Directory"
+$ImgConvert_Destination_GroupBox.Location            = New-Object System.Drawing.Point(10,60)
+
+$ImgConvert_DestinationDirectory_Label               = New-Object system.Windows.Forms.Label
+$ImgConvert_DestinationDirectory_Label.Size          = '520,25'
+$ImgConvert_DestinationDirectory_Label.Text          = $DestinationDirectory
+$ImgConvert_DestinationDirectory_Label.AutoSize      = $true
+$ImgConvert_DestinationDirectory_Label.TextAlign     = 'MiddleLeft'
+$ImgConvert_DestinationDirectory_Label.Location      = New-Object System.Drawing.Point(5,15)
+$ImgConvert_DestinationDirectory_Label.Font          = 'Microsoft Sans Serif,9.5,style=Underline'
+
+$ImgConvert_DestinationSelect_Button                 = New-Object system.Windows.Forms.Button
+$ImgConvert_DestinationSelect_Button.Text            = "..."
+$ImgConvert_DestinationSelect_Button.Width           = 35
+$ImgConvert_DestinationSelect_Button.Height          = 25
+$ImgConvert_DestinationSelect_Button.Location        = New-Object System.Drawing.Point(540,10)
+$ImgConvert_DestinationSelect_Button.Font            = 'Microsoft Sans Serif,9.5'
+$ImgConvert_DestinationSelect_Button.Add_Click({
+
+})
+
+$ImgConvert_Destination_GroupBox.Controls.AddRange(@(
+    $ImgConvert_DestinationDirectory_Label,
+    $ImgConvert_DestinationSelect_Button
+))
+
+$ImgConvertMainWindow.controls.AddRange(@(
+    $ImgConvert_Source_GroupBox,
+    $ImgConvert_Destination_GroupBox
+))
+
+$ImgConvertMainWindow.ShowDialog()
+
+
+#Function ImgConvert
 #	{
-		# ImgConvert - Converts RAW (and other) image files to the widely-supported JPEG or PNG formats
-		# 
-		# Most of the awesome work by David Anson from MSFT(https://dlaa.me/blog/post/converttojpeg).
-		# https://github.com/DavidAnson/ConvertTo-Jpeg
-		#
-		# PNG support and scaling by Diagg from www.OSD-couture.com
+		
 
 		Param (
 		    [Parameter(
